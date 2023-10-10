@@ -1,20 +1,13 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { getAllUmamusumeIds, getUmamusume } from '@/util/umamusume';
 
-export default function Umamusume() {
-  const router = useRouter();
-  const [umamusume, setUmamusume] = useState({});
-
-  useEffect(() => {
-    if (router.query.id) setUmamusume(require(`@/public/data/umamusume/${router.query.id}.json`));
-  }, [router.query.id]);
-
+export default function Umamusume({ umamusume }) {
+  console.log(umamusume);
   return (
     <>
       <div>title</div>
       <div>
-        <Image src={umamusume.image} width={144} height={144} alt="" loading />
+        <Image src={umamusume.image} width={144} height={144} alt="" />
       </div>
       <div>메지로 아르당</div>
       <div>
@@ -84,4 +77,23 @@ export default function Umamusume() {
       </div>
     </>
   );
+}
+
+export async function getStaticPaths() {
+  const paths = await getAllUmamusumeIds();
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const umamusume = await getUmamusume(params.id);
+
+  return {
+    props: {
+      umamusume,
+    },
+  };
 }

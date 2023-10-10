@@ -13,7 +13,7 @@ export default function Umamusume() {
       <Link href="/umamusume">back</Link>
       <Link href="/umamusume">back</Link>
       {umamusumes.map(umamusume => (
-        <Link key={umamusume.id} href={`/umamusume/${umamusume.id}`}>
+        <Link key={umamusume.id} id={umamusume.id} href={`/umamusume/${umamusume.id}`}>
           {umamusume.name}
         </Link>
       ))}
